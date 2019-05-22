@@ -1127,11 +1127,11 @@ class Threshold(Resource):
             @apiParam {String} token    The token.
             @apiParam {Number{0-1}} threshold    A fixed threshold value for all the nodes: if not specified the
                                                 thresholds will be assigned using a normal distribution.
-            @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+            @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
             @apiName threshold
             @apiGroup Epidemics
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/Threshold', data={'token': token, 'infected': percentage, 'threshold': threshold})
+            put('http://localhost:5000/api/Threshold', data={'token': token, 'infected': fraction, 'threshold': threshold})
         """
         token = str(request.form['token'])
 
@@ -1153,7 +1153,7 @@ class Threshold(Resource):
 
         model = tm.ThresholdModel(g)
         config = mc.Configuration()
-        config.add_model_parameter('percentage_infected', float(infected))
+        config.add_model_parameter('fraction_infected', float(infected))
 
         if float(threshold) > 0:
             for n in g.nodes():
@@ -1178,11 +1178,11 @@ class IndependentCascades(Resource):
                 this behavior can be changed by using the <a href="#api-Experiment-configure"> advanced configuration </a> endpoint.
             @apiVersion 0.5.0
             @apiParam {String} token    The token.
-            @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+            @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
             @apiName indepcascades
             @apiGroup Epidemics
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/IndependentCascades', data={'token': token, 'infected': percentage})
+            put('http://localhost:5000/api/IndependentCascades', data={'token': token, 'infected': fraction})
         """
         token = str(request.form['token'])
 
@@ -1200,7 +1200,7 @@ class IndependentCascades(Resource):
 
         model = ic.IndependentCascadesModel(g)
         config = mc.Configuration()
-        config.add_model_parameter('percentage_infected', float(infected))
+        config.add_model_parameter('fraction_infected', float(infected))
 
         threshold = 0.1
         for e in g.edges():
@@ -1224,13 +1224,13 @@ class SIR(Resource):
             @ApiDescription Instantiate a SIR Model on the network bound to the provided token.
             @apiVersion 0.2.0
             @apiParam {String} token    The token.
-            @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+            @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
             @apiParam {Number{0-1}}  beta    Infection rate.
             @apiParam {Number{0-1}} gamma    Recovery rate.
             @apiName sir
             @apiGroup Epidemics
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/SIR', data={'beta': beta, 'gamma': gamma, 'infected': percentage, 'token': token})
+            put('http://localhost:5000/api/SIR', data={'beta': beta, 'gamma': gamma, 'infected': fraction, 'token': token})
         """
         token = str(request.form['token'])
 
@@ -1251,7 +1251,7 @@ class SIR(Resource):
 
             model = sir.SIRModel(g)
             config = mc.Configuration()
-            config.add_model_parameter('percentage_infected', float(infected))
+            config.add_model_parameter('fraction_infected', float(infected))
             config.add_model_parameter('beta', float(beta))
             config.add_model_parameter('gamma', float(gamma))
             model.set_initial_status(config)
@@ -1271,12 +1271,12 @@ class SI(Resource):
             @ApiDescription Instantiate a SI Model on the network bound to the provided token.
             @apiVersion 0.2.0
             @apiParam {String} token    The token.
-            @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+            @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
             @apiParam {Number{0-1}}  beta    Infection rate.
             @apiName si
             @apiGroup Epidemics
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/SI', data={'beta': beta, 'infected': percentage, 'token': token})
+            put('http://localhost:5000/api/SI', data={'beta': beta, 'infected': fraction, 'token': token})
         """
         token = str(request.form['token'])
 
@@ -1296,7 +1296,7 @@ class SI(Resource):
 
             model = si.SIModel(g)
             config = mc.Configuration()
-            config.add_model_parameter('percentage_infected', float(infected))
+            config.add_model_parameter('fraction_infected', float(infected))
             config.add_model_parameter('beta', float(beta))
             model.set_initial_status(config)
 
@@ -1315,13 +1315,13 @@ class SIS(Resource):
             @ApiDescription Instantiate a SIS Model on the network bound to the provided token.
             @apiVersion 0.2.0
             @apiParam {String} token    The token.
-            @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+            @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
             @apiParam {Number{0-1}}  beta    Infection rate.
             @apiParam {Number{0-1}}  lambda    Recovery rate.
             @apiName sis
             @apiGroup Epidemics
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/SIS', data={'beta': beta, 'lambda': lambda, 'infected': percentage, 'token': token})
+            put('http://localhost:5000/api/SIS', data={'beta': beta, 'lambda': lambda, 'infected': fraction, 'token': token})
         """
         token = str(request.form['token'])
 
@@ -1342,7 +1342,7 @@ class SIS(Resource):
 
             model = sis.SISModel(g)
             config = mc.Configuration()
-            config.add_model_parameter('percentage_infected', float(infected))
+            config.add_model_parameter('fraction_infected', float(infected))
             config.add_model_parameter('beta', float(beta))
             config.add_model_parameter('lambda', float(lamb))
             model.set_initial_status(config)
@@ -1362,14 +1362,14 @@ class SEIS(Resource):
             @ApiDescription Instantiate a SEIS Model on the network bound to the provided token.
             @apiVersion 1.0.0
             @apiParam {String} token    The token.
-            @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+            @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
             @apiParam {Number{0-1}}  beta    Infection rate.
             @apiParam {Number{0-1}}  lambda    Recovery rate.
             @apiParam {Number{0-1}}  alpha   Incubation period.
             @apiName seis
             @apiGroup Epidemics
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/SEIS', data={'beta': beta, 'lambda': lambda, 'alpha': alpha, 'infected': percentage, 'token': token})
+            put('http://localhost:5000/api/SEIS', data={'beta': beta, 'lambda': lambda, 'alpha': alpha, 'infected': fraction, 'token': token})
         """
         token = str(request.form['token'])
 
@@ -1391,7 +1391,7 @@ class SEIS(Resource):
 
             model = seis.SEISModel(g)
             config = mc.Configuration()
-            config.add_model_parameter('percentage_infected', float(infected))
+            config.add_model_parameter('fraction_infected', float(infected))
             config.add_model_parameter('beta', float(beta))
             config.add_model_parameter('lambda', float(lamb))
             config.add_model_parameter('alpha', float(alpha))
@@ -1412,14 +1412,14 @@ class SEIR(Resource):
             @ApiDescription Instantiate a SEIR Model on the network bound to the provided token.
             @apiVersion 1.0.0
             @apiParam {String} token    The token.
-            @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+            @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
             @apiParam {Number{0-1}}  beta    Infection rate.
             @apiParam {Number{0-1}}  gamma    Recovery rate.
             @apiParam {Number{0-1}}  alpha   Incubation period.
             @apiName seir
             @apiGroup Epidemics
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/SEIS', data={'beta': beta, 'gamma': gamma, 'alpha': alpha, 'infected': percentage, 'token': token})
+            put('http://localhost:5000/api/SEIS', data={'beta': beta, 'gamma': gamma, 'alpha': alpha, 'infected': fraction, 'token': token})
         """
         token = str(request.form['token'])
 
@@ -1441,7 +1441,7 @@ class SEIR(Resource):
 
             model = seir.SEIRModel(g)
             config = mc.Configuration()
-            config.add_model_parameter('percentage_infected', float(infected))
+            config.add_model_parameter('fraction_infected', float(infected))
             config.add_model_parameter('beta', float(beta))
             config.add_model_parameter('gamma', float(gamma))
             config.add_model_parameter('alpha', float(alpha))
@@ -1462,14 +1462,14 @@ class SWIR(Resource):
             @ApiDescription Instantiate a SWIR Model on the network bound to the provided token.
             @apiVersion 2.0.0
             @apiParam {String} token    The token.
-            @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+            @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
             @apiParam {Number{0-1}}  kappa    Infection rate.
             @apiParam {Number{0-1}}  mu    Recovery rate.
             @apiParam {Number{0-1}}  nu   Incubation period.
             @apiName swir
             @apiGroup Epidemics
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/SWIR', data={'kappa': kappa, 'mu': mu, 'nu': nu, 'infected': percentage, 'token': token})
+            put('http://localhost:5000/api/SWIR', data={'kappa': kappa, 'mu': mu, 'nu': nu, 'infected': fraction, 'token': token})
         """
         token = str(request.form['token'])
 
@@ -1491,7 +1491,7 @@ class SWIR(Resource):
 
             model = swir.SWIRModel(g)
             config = mc.Configuration()
-            config.add_model_parameter('percentage_infected', float(infected))
+            config.add_model_parameter('fraction_infected', float(infected))
             config.add_model_parameter('kappa', float(kappa))
             config.add_model_parameter('mu', float(mu))
             config.add_model_parameter('nu', float(nu))
@@ -1516,11 +1516,11 @@ class Profile(Resource):
                                                 profile will be assigned using a normal distribution.
             @apiParam {Number{0-1}} blocked   Probability for a node that chose to not adopt to became blocked
             @apiParam {Number{0-1}} adopter_rate    Probability of spontaneous adoption
-            @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+            @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
             @apiName profile
             @apiGroup Epidemics
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/Profile', data={'token': token, 'infected': percentage})
+            put('http://localhost:5000/api/Profile', data={'token': token, 'infected': fraction})
         """
         token = str(request.form['token'])
 
@@ -1544,7 +1544,7 @@ class Profile(Resource):
             model = ac.ProfileModel(g)
 
             config = mc.Configuration()
-            config.add_model_parameter('percentage_infected', float(infected))
+            config.add_model_parameter('fraction_infected', float(infected))
 
             if float(profile) > 0:
                 for n in g.nodes():
@@ -1584,11 +1584,11 @@ class ProfileThreshold(Resource):
                                                 thresholds will be assigned using a normal distribution.
             @apiParam {Number{0-1}} blocked   Probability for a node that chose to not adopt to became blocked
             @apiParam {Number{0-1}} adopter_rate    Probability of spontaneous adoption
-            @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+            @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
             @apiName profilethreshold
             @apiGroup Epidemics
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/ProfileThreshold', data={'token': token, 'infected': percentage, 'threshold': threshold, 'profile': profile})
+            put('http://localhost:5000/api/ProfileThreshold', data={'token': token, 'infected': fraction, 'threshold': threshold, 'profile': profile})
         """
         token = str(request.form['token'])
 
@@ -1615,7 +1615,7 @@ class ProfileThreshold(Resource):
 
             model = pt.ProfileThresholdModel(g)
             config = mc.Configuration()
-            config.add_model_parameter('percentage_infected', float(infected))
+            config.add_model_parameter('fraction_infected', float(infected))
 
             if float(profile) > 0:
                 for n in g.nodes():
@@ -1653,11 +1653,11 @@ class Voter(Resource):
             @ApiDescription Instantiate the Voter Model on the network bound to the provided token.
             @apiVersion 0.7.0
             @apiParam {String} token    The token.
-            @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+            @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
             @apiName voter
             @apiGroup Opinion Dynamics
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/Voter', data={'token': token, 'infected': percentage})
+            put('http://localhost:5000/api/Voter', data={'token': token, 'infected': fraction})
         """
         token = str(request.form['token'])
 
@@ -1675,7 +1675,7 @@ class Voter(Resource):
 
         model = vm.VoterModel(g)
         config = mc.Configuration()
-        config.add_model_parameter('percentage_infected', float(infected))
+        config.add_model_parameter('fraction_infected', float(infected))
         model.set_initial_status(config)
 
         try:
@@ -1694,12 +1694,12 @@ class QVoter(Resource):
             @ApiDescription Instantiate the QVoter Model on the network bound to the provided token.
             @apiVersion 0.9.0
             @apiParam {String} token    The token.
-            @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+            @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
             @apiParam {Number} q Number of neighbours that affect the opinion of an agent
             @apiName qvoter
             @apiGroup Opinion Dynamics
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/QVoter', data={'token': token, 'q': number,'infected': percentage})
+            put('http://localhost:5000/api/QVoter', data={'token': token, 'q': number,'infected': fraction})
         """
         token = str(request.form['token'])
 
@@ -1720,7 +1720,7 @@ class QVoter(Resource):
             model = qvm.QVoterModel(g)
             config = mc.Configuration()
             config.add_model_parameter("q", q)
-            config.add_model_parameter('percentage_infected', float(infected))
+            config.add_model_parameter('fraction_infected', float(infected))
             model.set_initial_status(config)
 
             config_model(token, "QVoterModel", model)
@@ -1738,12 +1738,12 @@ class MaJorityRule(Resource):
             @ApiDescription Instantiate the Majority Rule Model on the network bound to the provided token.
             @apiVersion 0.7.0
             @apiParam {String} token    The token.
-            @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+            @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
             @apiParam {Number{0-N}} q The group size.
             @apiName majority
             @apiGroup Opinion Dynamics
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/Majority', data={'token': token, 'infected': percentage, 'q': q})
+            put('http://localhost:5000/api/Majority', data={'token': token, 'infected': fraction, 'q': q})
         """
         token = str(request.form['token'])
 
@@ -1764,7 +1764,7 @@ class MaJorityRule(Resource):
             model = mrm.MajorityRuleModel(g)
             config = mc.Configuration()
             config.add_model_parameter("q", q)
-            config.add_model_parameter('percentage_infected', float(infected))
+            config.add_model_parameter('fraction_infected', float(infected))
             model.set_initial_status(config)
 
             config_model(token, "MajorityRule", model)
@@ -1783,11 +1783,11 @@ class Sznajd(Resource):
             The model is defined for complete graphs, however it can be applied to generic ones.
             @apiVersion 0.7.0
             @apiParam {String} token    The token.
-            @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+            @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
             @apiName sznajd
             @apiGroup Opinion Dynamics
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/Sznajd', data={'token': token, 'infected': percentage})
+            put('http://localhost:5000/api/Sznajd', data={'token': token, 'infected': fraction})
         """
         token = str(request.form['token'])
 
@@ -1807,7 +1807,7 @@ class Sznajd(Resource):
             model = sm.SznajdModel(g)
 
             config = mc.Configuration()
-            config.add_model_parameter('percentage_infected', float(infected))
+            config.add_model_parameter('fraction_infected', float(infected))
             model.set_initial_status(config)
 
             config_model(token, "Sznajd", model)
@@ -1827,13 +1827,13 @@ class KerteszThreshold(Resource):
             @apiParam {String} token    The token.
             @apiParam {Number{0-1}} threshold    A fixed threshold value for all the nodes: if not specified the
                                                 thresholds will be assigned using a normal distribution.
-            @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+            @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
             @apiParam {Number {0-1}} adopter_rate    The adopter rate. Fixed probability of self-infection per iteration.
-            @apiParam {Number {0-1}} blocked    Percentage of blocked nodes.
+            @apiParam {Number {0-1}} blocked    fraction of blocked nodes.
             @apiName KerteszThreshold
             @apiGroup Epidemics
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/KerteszThreshold', data={'token': token, 'infected': percentage, 'adopters_rate': adopters_rate, 'blocked': blocked, 'threshold': threshold})
+            put('http://localhost:5000/api/KerteszThreshold', data={'token': token, 'infected': fraction, 'adopters_rate': adopters_rate, 'blocked': blocked, 'threshold': threshold})
         """
         token = str(request.form['token'])
 
@@ -1863,9 +1863,9 @@ class KerteszThreshold(Resource):
 
         model = jt.KerteszThresholdModel(g)
         config = mc.Configuration()
-        config.add_model_parameter('percentage_infected', infected)
+        config.add_model_parameter('fraction_infected', infected)
         config.add_model_parameter('adopter_rate', adopter_rate)
-        config.add_model_parameter('percentage_blocked', blocked)
+        config.add_model_parameter('fraction_blocked', blocked)
 
         if float(threshold) > 0:
             for n in g.nodes():
@@ -1903,7 +1903,7 @@ class CognitiveOpinionDynamic(Resource):
             @apiName CognitiveOpinionDynamic
             @apiGroup Opinion Dynamics
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/CognitiveOpinionDynamic', data={'token': token, 'infected': percentage, 'adopters_rate': adopters_rate, 'blocked': blocked, 'threshold': threshold})
+            put('http://localhost:5000/api/CognitiveOpinionDynamic', data={'token': token, 'infected': fraction, 'adopters_rate': adopters_rate, 'blocked': blocked, 'threshold': threshold})
         """
         token = str(request.form['token'])
 
@@ -1955,7 +1955,7 @@ class CognitiveOpinionDynamic(Resource):
         config.add_model_parameter("R_fraction_negative", R_fraction_negative)
         config.add_model_parameter("R_fraction_neutral", R_fraction_neutral)
         config.add_model_parameter("R_fraction_positive", R_fraction_positive)
-        config.add_model_parameter('percentage_infected', 0.1)
+        config.add_model_parameter('fraction_infected', 0.1)
         model.set_initial_status(config)
 
         try:
@@ -1981,7 +1981,7 @@ class AlgorithmicBias(Resource):
             @apiName AlgorithmicBias
             @apiGroup Opinion Dynamics
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/AlgorithmicBias', data={'token': token, 'epsilon': percentage, 'gamma': gamma})
+            put('http://localhost:5000/api/AlgorithmicBias', data={'token': token, 'epsilon': fraction, 'gamma': gamma})
         """
         token = str(request.form['token'])
 
@@ -2004,7 +2004,7 @@ class AlgorithmicBias(Resource):
         config = mc.Configuration()
         config.add_model_parameter("epsilon",  epsilon)
         config.add_model_parameter("gamma", gamma)
-        config.add_model_parameter('percentage_infected', 0.1)
+        config.add_model_parameter('fraction_infected', 0.1)
         model.set_initial_status(config)
 
         try:
@@ -2025,12 +2025,12 @@ class dSI(Resource):
             @ApiDescription Instantiate a SI Model on the dynamic network bound to the provided token.
             @apiVersion 2.0.0
             @apiParam {String} token    The token.
-            @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+            @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
             @apiParam {Number{0-1}}  beta    Infection rate.
             @apiName dsi
             @apiGroup Epidemics Dynamic Networks
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/dSI', data={'beta': beta, 'infected': percentage, 'token': token})
+            put('http://localhost:5000/api/dSI', data={'beta': beta, 'infected': fraction, 'token': token})
         """
         token = str(request.form['token'])
 
@@ -2054,7 +2054,7 @@ class dSI(Resource):
 
             model = dsi.DynSIModel(g)
             config = mc.Configuration()
-            config.add_model_parameter('percentage_infected', float(infected))
+            config.add_model_parameter('fraction_infected', float(infected))
             config.add_model_parameter('beta', float(beta))
             model.set_initial_status(config)
 
@@ -2073,13 +2073,13 @@ class dSIR(Resource):
             @ApiDescription Instantiate a SIR Model on the dynamic network bound to the provided token.
             @apiVersion 2.0.0
             @apiParam {String} token    The token.
-            @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+            @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
             @apiParam {Number{0-1}}  beta    Infection rate.
             @apiParam {Number{0-1}} gamma    Recovery rate.
             @apiName dsir
             @apiGroup Epidemics Dynamic Networks
             @apiExample [python request] Example usage:
-            put('http://localhost:5000/api/dSIR', data={'beta': beta, 'gamma': gamma, 'infected': percentage, 'token': token})
+            put('http://localhost:5000/api/dSIR', data={'beta': beta, 'gamma': gamma, 'infected': fraction, 'token': token})
         """
         token = str(request.form['token'])
 
@@ -2104,7 +2104,7 @@ class dSIR(Resource):
 
             model = dsir.DynSIRModel(g)
             config = mc.Configuration()
-            config.add_model_parameter('percentage_infected', float(infected))
+            config.add_model_parameter('fraction_infected', float(infected))
             config.add_model_parameter('beta', float(beta))
             config.add_model_parameter('gamma', float(gamma))
             model.set_initial_status(config)
@@ -2124,13 +2124,13 @@ class dSIS(Resource):
         @ApiDescription Instantiate a SIS Model on the Dynamic network bound to the provided token.
         @apiVersion 2.0.0
         @apiParam {String} token    The token.
-        @apiParam {Number{0-1}} infected    The initial percentage of infected nodes.
+        @apiParam {Number{0-1}} infected    The initial fraction of infected nodes.
         @apiParam {Number{0-1}}  beta    Infection rate.
         @apiParam {Number{0-1}}  lambda    Recovery rate.
         @apiName dsis
         @apiGroup Epidemics Dynamic Networks
         @apiExample [python request] Example usage:
-        put('http://localhost:5000/api/dSIS', data={'beta': beta, 'lambda': lambda, 'infected': percentage, 'token': token})
+        put('http://localhost:5000/api/dSIS', data={'beta': beta, 'lambda': lambda, 'infected': fraction, 'token': token})
         """
         token = str(request.form['token'])
 
@@ -2155,7 +2155,7 @@ class dSIS(Resource):
 
             model = dsis.DynSISModel(g)
             config = mc.Configuration()
-            config.add_model_parameter('percentage_infected', float(infected))
+            config.add_model_parameter('fraction_infected', float(infected))
             config.add_model_parameter('beta', float(beta))
             config.add_model_parameter('lambda', float(lamb))
             model.set_initial_status(config)
